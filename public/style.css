@@ -1,27 +1,49 @@
 body {
   font-family: Camphor, "Open Sans", "Segoe UI", sans-serif;
+  margin: 0;
+}
+body,
+html,
+.global {
+  height: 100%;
 }
 .bg {
+  z-index: -2;
   position: absolute;
   width: 100%;
   height: var(--main-height);
   overflow: hidden;
-  -webkit-transform: skewY(-12deg);
+  transform-origin: 0;
+}
+.bg.start {
+  top: 0;
   transform: skewY(-12deg);
-  -webkit-transform-origin: 0;
   transform-origin: 0;
   background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #a6ffcb 94%);
+}
+.bg.end {
+  position: relative;
+  bottom: 0;
+  margin-top: 10px;
+  height: 15px !important;
+  background: linear-gradient(150deg, #53f 15%, #05d5ff 70%, #a6ffcb 94%);
+}
+.global {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .assesment {
   text-align: center;
   width: 100%;
+  color: white;
 }
 
 h2 {
   position: relative;
   color: #262f38;
   padding: 0.5em 1em;
-  margin: 10px auto 10px;
+  margin: 10px auto 0px;
   width: 300px;
 
   white-space: nowrap;
@@ -48,7 +70,7 @@ h2 {
 
 #chart {
   width: 100%;
-  max-width: 600px;
+  max-width: 400px;
   height: var(--main-height);
   margin: 0px auto 0;
   display: block;
@@ -98,7 +120,7 @@ h2 {
 }
 #chart #bars li .bar {
   display: block;
-  background: #49e;
+  background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
   position: absolute;
   bottom: 0;
   color: white;
@@ -122,14 +144,17 @@ h2 {
 }
 @media (max-width: 600px) {
   #chart #bars li .bar {
-    width: 34px;
-    margin-left: 13px;
+    width: 53px;
+    margin-left: 20px;
   }
   #chart #bars li span {
     font-size: 0.8rem;
   }
   :root {
-    --main-height: 150px;
+    --main-height: 100px;
+  }
+  .frame {
+    height: calc(100% - 240px);
   }
 }
 @media (min-width: 600px) {
@@ -138,17 +163,29 @@ h2 {
     margin-left: 15px;
   }
   :root {
-    --main-height: 300px;
+    --main-height: 200px;
+  }
+  .frame {
+    height: calc(100% - 340px);
   }
 }
 .frame {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 50px;
-  background: wheat;
+  flex-direction: column
 }
 video {
-    max-width: 360px;
-    height: 300px;
+  width: 100%;
+  max-width: 390px;
+  height: calc(100% - 25px);
+  position: relative;
+  background: rgba(4, 0, 0, 0.1);
+}
+p {
+  margin: 0;
+  padding: 10px 0;
+}
+.assesment p:first-child {
+  background-color: rgba(44, 44, 44, 0.48);
 }

@@ -1,17 +1,21 @@
 const video = document.getElementById('video')
 
-function startvideo() {
-    navigator.getUserMedia({ video: {} }, streamIt, (err) => document.getElementById('tst').innerHTML = err)
-}
-
 Promise.all([
     faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
     faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
     faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
     faceapi.nets.faceExpressionNet.loadFromUri('/models')
-]).then(() => {
-    startvideo()
-})
+]).then(startvideo)
+
+
+function startvideo() {
+    // navigator.getUserMedia({ video: {} }, streamIt, (err) => document.getElementById('tst').innerHTML = err)
+    navigator.getUserMedia(
+        { video: {} },
+        stream => video.srcObject = stream,
+        err => console.error(err)
+    )
+}
 
 function setValues(pMoodList, pIntervalAnim) {
     let moodGeneral = ''
@@ -57,7 +61,7 @@ function listenToVideo() {
         const intervalAnim = 400
         setInterval(async () => {
             const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
-            if (detections.length > 0)
+            if (detections.length > 0) {
                 setValues([
                     { id: 'happy', value: detections[0].expressions.happy },
                     { id: 'sad', value: detections[0].expressions.sad },
@@ -66,10 +70,20 @@ function listenToVideo() {
                     { id: 'disgusted', value: detections[0].expressions.disgusted },
                     { id: 'scared', value: detections[0].expressions.fearful }
                 ], intervalAnim)
+            } else {
+                setValues([
+                    { id: 'happy', value: 0 },
+                    { id: 'sad', value: 0 },
+                    { id: 'angry', value: 0 },
+                    { id: 'surprised', value: 0 },
+                    { id: 'disgusted', value: 0 },
+                    { id: 'scared', value: 0 }
+                ], 100)
+            }
             const resizedDetections = faceapi.resizeResults(detections, displaySize)
             canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
             faceapi.draw.drawDetections(canvas, resizedDetections)
-            faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+            // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
             faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
         }, intervalAnim + 100)
     })

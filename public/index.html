@@ -10,14 +10,19 @@
     <script defer src="face-api.min.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-
+<style>
+canvas{
+    position: absolute;
+    bottom: 0
+}
+</style>
 <body>
     <div class="bg start"></div>
     <div class="global">
         <div class="stats">
             <div class="assesment">
-                <p>Imma do smth for that crazy hair later</p>
-                <h2 id="mood" class="show">Acessing webCam ...</h2>
+                <p>Amine aimera savoir ton humeur ;)</p>
+                <h2 id="mood" class="show">Chargement ...</h2>
             </div>
             <div id="chart">
                 <ul id="bars">
@@ -44,10 +49,11 @@
         </div>
         <div class="frame">
             <b id="tst"></b>
-            <video id="video" autoplay muted></video>
+            <video id="video"  autoplay muted></video>
             <div class="bg end"></div>
         </div>
     </div>
+    <!-- <video id="video" width="720" height="560" autoplay muted></video> -->
 
     <script defer src="app.js"></script>
 </body>
